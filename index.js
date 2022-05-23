@@ -28,11 +28,6 @@ let persons = [
     name: "Mary Poppendieck",
     number: "39-23-6423122",
   },
-  {
-    id: 5,
-    name: "Mardddy Poppendieck",
-    number: "39-23-6423122",
-  },
 ]
 app.use(morgan("tiny"))
 app.get("/api/persons", (request, response) => {
