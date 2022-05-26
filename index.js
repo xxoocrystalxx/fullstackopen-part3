@@ -60,6 +60,7 @@ app.post("/api/persons", (request, response, next) => {
 
   Person.find({ name: body.name })
     .then((found) => {
+      console.log("length", found.length)
       if (found.length) {
         console.log("founded with id: ", found)
         const personObj = {
