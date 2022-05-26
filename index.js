@@ -58,32 +58,14 @@ app.post("/api/persons", (request, response, next) => {
     })
   }
 
-  Person.find({ name: body.name })
-    .then((found) => {
-      console.log("length", found.length)
-      if (found.length) {
-        console.log("founded with id: ", found)
-        const personObj = {
-          name: body.name,
-          number: body.number,
-        }
-        Person.findByIdAndUpdate(found.id, personObj, { new: true })
-          .then((updatedNote) => {
-            response.json(updatedNote)
-          })
-          .catch((error) => next(error))
-      } else {
-        console.log("not founded")
-        const person = new Person({
-          name: body.name,
-          number: body.number,
-        })
-        person.save().then((savedperson) => {
-          response.json(person)
-        })
-      }
-    })
-    .catch((error) => next(error))
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+  })
+
+  person.save().then((savedperson) => {
+    response.json(person)
+  })
 })
 
 const errorHandler = (error, request, response, next) => {
