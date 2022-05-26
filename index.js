@@ -60,24 +60,27 @@ app.post("/api/persons", (request, response, next) => {
 
   Person.find({ name: body.name })
     .then((found) => {
-      const personObj = {
-        name: body.name,
-        number: body.number,
-      }
-      Person.findByIdAndUpdate(body.id, personObj, { new: true }).then(
-        (updatedNote) => {
-          response.json(updatedNote)
+      if (found) {
+        const personObj = {
+          name: body.name,
+          number: body.number,
         }
-      )
+        Person.findByIdAndUpdate(body.id, personObj, { new: true })
+          .then((updatedNote) => {
+            response.json(updatedNote)
+          })
+          .catch((error) => next(error))
+      } else {
+        const person = new Person({
+          name: body.name,
+          number: body.number,
+        })
+        person.save().then((savedperson) => {
+          response.json(person)
+        })
+      }
     })
     .catch((error) => next(error))
-  const person = new Person({
-    name: body.name,
-    number: body.number,
-  })
-  person.save().then((savedperson) => {
-    response.json(person)
-  })
 })
 
 const errorHandler = (error, request, response, next) => {
