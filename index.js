@@ -35,13 +35,13 @@ app.get("/api/persons/:id", (request, response, next) => {
 
 app.delete("/api/persons/:id", (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then((result) => {
+    .then(() => {
       response.status(204).end()
     })
     .catch((error) => next(error))
 })
 
-morgan.token("custom", function (req, res) {
+morgan.token("custom", function (req) {
   return JSON.stringify(req.body)
 })
 app.use(
@@ -66,7 +66,7 @@ app.post("/api/persons", (request, response, next) => {
   person
     .save()
     .then((savedperson) => {
-      response.json(person)
+      response.json(savedperson)
     })
     .catch((error) => next(error))
 })
