@@ -64,11 +64,11 @@ app.post("/api/persons", (request, response, next) => {
         name: body.name,
         number: body.number,
       }
-      Person.findByIdAndUpdate(body.id, personObj, { new: true })
-        .then((updatedNote) => {
+      Person.findByIdAndUpdate(body.id, personObj, { new: true }).then(
+        (updatedNote) => {
           response.json(updatedNote)
-        })
-        .catch((error) => next(error))
+        }
+      )
     })
     .catch((error) => next(error))
   const person = new Person({
