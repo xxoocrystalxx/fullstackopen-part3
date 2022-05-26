@@ -61,6 +61,7 @@ app.post("/api/persons", (request, response, next) => {
   Person.find({ name: body.name })
     .then((found) => {
       if (found) {
+        console.log("founded")
         const personObj = {
           name: body.name,
           number: body.number,
@@ -71,6 +72,7 @@ app.post("/api/persons", (request, response, next) => {
           })
           .catch((error) => next(error))
       } else {
+        console.log("not founded")
         const person = new Person({
           name: body.name,
           number: body.number,
